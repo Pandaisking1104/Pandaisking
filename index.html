@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing Domain Detector</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="logo.png" alt="Logo" class="logo">
+        </div>
+        <div class="buttons">
+            <button onclick="goToPage('about.html')">About Us</button>
+            <button onclick="goToPage('statistics.html')">Statistics</button>
+            <button onclick="goToPage('contact.html')">Contact</button>
+        </div>
+    </header>
+    <div class="background">
+        <div class="container">
+            <h1>Phishing Domain Detector</h1>
+            <input type="text" id="domainInput" placeholder="Enter domain name">
+            <button onclick="detectPhishing()">Detect</button>
+            <div id="predictionResult"></div> <!-- This is where the prediction result will be displayed -->
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 Phishing Domain Detector. All rights reserved.</p>
+    </footer>
+    <script src="script.js"></script>
+
+    <script>
+    // Function to detect phishing and display result
+    function detectPhishing() {
+        var domain = document.getElementById('domainInput').value;
+        fetch('/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ domain: domain }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Update the webpage with the prediction result
+            document.getElementById('predictionResult').innerText = 'Prediction: ' + data.result;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    // Function to navigate to a different page
+    function goToPage(page) {
+        window.location.href = page;
+    }
+    </script>
+</body>
+
+</html>
